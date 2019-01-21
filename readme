@@ -1,0 +1,6 @@
+readme
+
+A simple test for connecting to my postgresql server through a python script in the commandline. 
+
+Simple functions for now- move between different tables, search their contents by choice of column, view contents (crudely)
+and add new rows w/ data.
