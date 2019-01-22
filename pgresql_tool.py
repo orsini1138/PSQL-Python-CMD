@@ -1,3 +1,7 @@
+### TODO: on line 68 fix the loading of col names so that if there is a space in the name, it is then
+###		  wrapped in quotes when it's called, because it won't work otherwise if there is a space.
+
+
 import sys, time, re, traceback
 import psycopg2 as p
 
@@ -67,7 +71,15 @@ def add():
 	else: 
 		#access all columns in table
 		cur.execute(f"SELECT * FROM {current_table.table} LIMIT 0")
-		colnames = [desc[0] for desc in cur.description]
+		#colnames = [desc[0] for desc in cur.description] 
+		# When the col name has a space in it, like "fish numbs", you can't use the execute() functions without 
+		# wrapping it in double quotes. This part checks if it has spaces in it and applys "" where needed. 
+		colnames = []
+		for desc in cur.description:
+			if ' ' in desc[0]:
+				colnames.append('"'+desc[0]+'"')
+			else:
+				colnames.append(desc[0])
 
 		# ask user for data inputs
 		inputs = []
